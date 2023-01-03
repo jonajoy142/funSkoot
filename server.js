@@ -12,11 +12,21 @@ app.use(express.static(path.join(__dirname,'public')));
 
 //run when client connects
 io.on('connection',socket=>{
-    console.log('New WS Connection..')
-    // socket.on('disconnect',()=>{
-    //     console.log('user disconnected')
-    // })
+    
+    // console.log('New WS Connection..')
+   
     socket.emit('message','Welcome to FunSkoot!')
+
+    //BroadCast when a user connects
+
+    socket.broadcast.emit('message','A user has joined the chat')
+
+    //runs when client disconnects
+
+    socket.on('disconnect',()=>{
+        io.emit('message','A user left the chat')
+        // console.log("disconnected");
+    })
 })
 
 

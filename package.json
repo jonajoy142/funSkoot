@@ -1,0 +1,29 @@
+{
+  "name": "funskoot-chatapp",
+  "version": "1.0.0",
+  "description": "real time chat app",
+  "main": "server.js",
+  "scripts": {
+    "start":"nodemon server.js",
+    "dev":"nodemon server",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jonajoy142/funSkoot.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jonajoy142/funSkoot/issues"
+  },
+  "homepage": "https://github.com/jonajoy142/funSkoot#readme",
+  "dependencies": {
+    "express": "^4.18.2",
+    "moment": "^2.29.4",
+    "socket.io": "^4.5.4"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  }
+}

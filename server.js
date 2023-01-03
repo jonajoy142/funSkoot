@@ -27,6 +27,10 @@ io.on('connection',socket=>{
         io.emit('message','A user left the chat')
         // console.log("disconnected");
     })
+
+    socket.on('chatMessage',(msg)=>{
+        io.emit('message',msg)
+    })
 })
 
 

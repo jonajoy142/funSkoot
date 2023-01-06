@@ -14,7 +14,10 @@ app.use(express.static(path.join(__dirname,'public')));
 const botName  = 'funSkoot Bot  '
 //run when client connects
 io.on('connection',socket=>{
-    
+
+    socket.on('joinRoom',({username,room})=>{
+
+         
     // console.log('New WS Connection..')
    
     socket.emit('message',formatMessage(botName,'Welcome to FunSkoot!'))
@@ -22,16 +25,21 @@ io.on('connection',socket=>{
     //BroadCast when a user connects
 
     socket.broadcast.emit('message',formatMessage(botName,'A user has joined the chat'))
-
-    //runs when client disconnects
-
-    socket.on('disconnect',()=>{
-        io.emit('message',formatMessage(botName,'A user left the chat'))
-        // console.log("disconnected");
     })
+   
+
+   
 
     socket.on('chatMessage',(msg)=>{
         io.emit('message',formatMessage('USER ',msg))
+
+
+    })
+     //runs when client disconnects
+
+     socket.on('disconnect',()=>{
+        io.emit('message',formatMessage(botName,'A user left the chat'))
+        // console.log("disconnected");
     })
 })
 

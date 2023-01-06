@@ -1,5 +1,8 @@
-const socket = io()
 const chatForm = document.getElementById('chat-form')
+const chatMessages = document.querySelector('.chat-messages'); 
+
+const socket = io()
+
 
 //msg from client
 socket.on('message',message=>{
@@ -19,3 +22,13 @@ chatForm.addEventListener('submit',(e)=>{
  })
 
  //output msg to dom
+
+ function outputMessage(message){
+     const div = document.createElement('div');
+     div.classList.add('message');
+     div.innerHTML = ` <p class="meta">Brad <span>9:12pm</span></p>
+     <p class="text">
+       ${message}
+     </p> `;
+     document.querySelector('.chat-messages').appendChild(div);
+ }

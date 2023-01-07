@@ -3,6 +3,7 @@ const path = require('path')
 const http = require('http')
 const socketio = require('socket.io')
 const formatMessage = require('./utils/messages')
+const {userJoin,getCurrentUser} = require('./utils/users')
 
 const app =express()
 const server = http.createServer(app)
@@ -16,29 +17,34 @@ const botName  = 'funSkoot Bot  '
 io.on('connection',socket=>{
 
     socket.on('joinRoom',({username,room})=>{
+    const user = userJoin(socket.id,username,room)
 
+    socket.join(user.room);
          
-    // console.log('New WS Connection..')
+    // welcome current user
    
     socket.emit('message',formatMessage(botName,'Welcome to FunSkoot!'))
 
     //BroadCast when a user connects
 
-    socket.broadcast.emit('message',formatMessage(botName,'A user has joined the chat'))
+    socket.broadcast.to(user.room).emit('message',formatMessage(botName,`${user.username} has joined the chat`))
     })
    
 
    
 
     socket.on('chatMessage',(msg)=>{
-        io.emit('message',formatMessage('USER ',msg))
+        const user = getCurrentUser(socket.id)
+
+        io.to(user.room).emit('message',formatMessage(user.username,msg))
 
 
     })
      //runs when client disconnects
 
      socket.on('disconnect',()=>{
-        io.emit('message',formatMessage(botName,'A user left the chat'))
+        // const user = getCurrentUser(socket.id)
+        io.emit('message',formatMessage(botName,'user left the chat'))
         // console.log("disconnected");
     })
 })
